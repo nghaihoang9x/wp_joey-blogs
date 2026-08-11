@@ -20,17 +20,9 @@ $author_name   = get_the_author_meta('display_name');
 $author_avatar = get_avatar($post_id, 96, '', $author_name);
 $post_date     = get_the_date('F j, Y');
 $thumbnail     = get_the_post_thumbnail_url($post_id, 'full') ?: JOEY_BLOGS_PLUGIN_URL . 'assets/images/elementor-placeholder-image.png';
+$categories = wp_get_post_categories($post_id);
 
 // --- Recent Posts (excluding current post) ---
-$recent_args = array(
-    'post_type'      => 'post',
-    'post_status'    => 'publish',
-    'posts_per_page' => 3,
-    'post__not_in'   => array($post_id),
-    'orderby'        => 'date',
-    'order'          => 'DESC',
-);
-$recent_query = new WP_Query($recent_args);
 ?>
 <main class="site-main-blogs">
     <div class="j-article">
@@ -50,10 +42,10 @@ $recent_query = new WP_Query($recent_args);
                     <div class="j-article__date"><?php echo esc_html($post_date); ?></div>
                 </div>
             </div>
-            <div class="j-article__thumbnail">
-                <img src="<?php echo esc_url($thumbnail); ?>" alt="<?php echo esc_attr($title); ?>" loading="lazy">
-            </div>
             <div class="j-article__content">
+				<div class="j-article__thumbnail">
+					<img src="<?php echo esc_url($thumbnail); ?>" alt="<?php echo esc_attr($title); ?>" loading="lazy">
+				</div>
                 <?php 
                 the_content();
                 ?>
@@ -61,7 +53,25 @@ $recent_query = new WP_Query($recent_args);
         </div>
     </div>
 
-    <?php if ($recent_query->have_posts()) : ?>
+    <?php 
+
+	$recent_args = array(
+		'post_type'      => 'post',
+		'post_status'    => 'publish',
+		'posts_per_page' => 3,
+		'post__not_in'   => array($post_id), // Loại trừ bài hiện tại
+		'orderby'        => 'date',
+		'order'          => 'DESC',
+	);
+
+	// Nếu có category, thử tìm bài cùng category trước
+	if (!empty($categories)) {
+		$recent_args['category__in'] = $categories;
+	}
+
+	$recent_query = new WP_Query($recent_args);
+	if ($recent_query->have_posts()) : 
+	?>
     <section class="j-recent-blogs">
         <div class="container">
             <h2 class="j-recent-blogs__heading"><?php esc_html_e('Recent Blogs', 'nghaihoang9x'); ?></h2>

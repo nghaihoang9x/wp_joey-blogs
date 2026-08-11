@@ -3,6 +3,55 @@
    Applied to the entire website via wp_enqueue_scripts
    ============================================================ */
 
+.my-custom-button {
+    position: relative;
+    display: inline-block;
+    font-size: 18px;
+    line-height: 26px;
+    font-family: 'Cabin', sans-serif;
+    font-weight: 600;
+    color: #fff !important;
+    text-align: center;
+    border-radius: 2px;
+    padding: 12.5px 30px;
+    z-index: 1;
+    background: #C56A02;
+    cursor: pointer
+}
+
+.my-custom-button:after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #162e40;
+    border-radius: 2px;
+    -webkit-transform: scaleX(0);
+    transform: scaleX(0);
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    -webkit-transition-timing-function: ease-out;
+    transition-timing-function: ease-out;
+}
+
+.my-custom-button:hover:after {
+    opacity: 1;
+}
+
+.my-custom-button:hover:after {
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+    -webkit-transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
+    transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
+}
+
 /* --------------- Blogs Banner Section --------------- */
 .site-main-blogs {
     max-width: 100%;
@@ -518,34 +567,56 @@
     width: 100%;
     height: auto;
 }
-
+.requirement-the-content {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    letter-spacing: -1%;
+	
+}
 .j-article__content {
     font-weight: 400;
-    font-size: 20px;
+    font-size: 14px;
     line-height: 150%;
     letter-spacing: -1%;
     max-width: 926px;
     margin: 0 auto;
 }
 
+.requirement-the-content h2,
 .j-article__content h2 {
     font-weight: 350;
     font-size: 40px;
     line-height: 105%;
     letter-spacing: -4%;
-    margin-top: 0;
+    margin-top: 24px;
     margin-bottom: 48px;
 }
 
-.j-article__content img {
+/* .j-article__content img {
     height: auto;
     margin-bottom: 80px;
     margin-top: 80px;
     width: 100vw;
     max-width: none;
     margin-left: calc((100vw - 926px)/-2);
+} */
+
+.requirement-the-content ul,
+.j-article__content ul,
+.requirement-the-content ol,
+.j-article__content ol {
+	padding-left: 1.5rem
 }
 
+
+.requirement-the-content li,
+.j-article__content li {
+	margin: 16px 0;
+    list-style: disc;
+} 
+
+.requirement-the-content p+h2,
 .j-article__content p+h2 {
     margin-top: 60px;
 }
@@ -577,6 +648,12 @@
     gap: 24px;
 }
 
+
+.requirement-the-content p,
+.j-article__content p {
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
 /* --------------- Responsive --------------- */
 @media (max-width: 768px) {
     .blogs-page-head {
@@ -633,6 +710,8 @@
         font-size: 32px;
     }
 
+	
+	.requirement-the-content h2,
     .j-article__content h2 {
         font-size: 24px;
         margin-bottom: 24px;
@@ -640,24 +719,29 @@
 
     .j-article__thumbnail {
         margin-bottom: 48px;
+		margin-left: -16px;
+		margin-right: -16px;
     }
 
-    
+    	
+	.requirement-the-content,
     .j-article__content {
         font-size: 14px;
     }
-
+	
+	.requirement-the-content p,
     .j-article__content p{
         font-size: 14px;
     }
 
     .j-article__content img {
-        margin-left: -16px;
-        margin-right: -16px;
+/*         margin-left: -16px;
+        margin-right: -16px; */
         margin-bottom: 24px;
         margin-top: 24px;
     }
-
+	
+	.requirement-the-content p+h2,
     .j-article__content p+h2 {
         margin-top: 24px;
     }

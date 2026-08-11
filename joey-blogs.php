@@ -21,7 +21,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('JOEY_BLOGS_VERSION', '0.1.0');
+define('JOEY_BLOGS_VERSION', '0.1.0.4');
 define('JOEY_BLOGS_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('JOEY_BLOGS_PLUGIN_DIR', plugin_dir_path(__FILE__));
 
@@ -34,3 +34,12 @@ function joey_blogs_init() {
     new Joey_Blogs();
 }
 add_action('plugins_loaded', 'joey_blogs_init');
+
+add_filter('the_content', 'convert_custom_tags_to_buttons');
+function convert_custom_tags_to_buttons($content) {
+    // Tìm cấu trúc {{%Text%}} và thay thế bằng thẻ button/link
+    $pattern = '/\{\{\%(.*?)\%\}\}/';
+    $replacement = '<span class="my-custom-button">$1</span>';
+    
+    return preg_replace($pattern, $replacement, $content);
+}

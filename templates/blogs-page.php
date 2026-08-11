@@ -66,14 +66,16 @@ $all_categories = array_filter($all_categories, function ($cat) {
 						$category_name = !empty($categories) ? esc_html($categories[0]->name) : '';
 						$thumbnail = get_the_post_thumbnail_url(get_the_ID(), 'full') ?: JOEY_BLOGS_PLUGIN_URL . 'assets/images/elementor-placeholder-image.png';
 					?>
-						<div class="blogs-banner-slide-item">
-							<img src="<?php echo esc_url($thumbnail); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" loading="lazy">
-							<h2 class="blogs-banner-slide-title"><?php echo esc_html(get_the_title()); ?></h2>
-							<div class="blogs-banner-slide-content">
-								<span class="blogs-banner-slide-category"><?php echo $category_name; ?></span>
-								<p class="blogs-banner-slide-description"><?php echo esc_html(wp_trim_words(get_the_excerpt() ?: get_the_content(), 25, '...')); ?></p>
+						<a href="<?php echo get_permalink(); ?>">
+							<div class="blogs-banner-slide-item">
+								<img src="<?php echo esc_url($thumbnail); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" loading="lazy">
+								<h2 class="blogs-banner-slide-title"><?php echo esc_html(get_the_title()); ?></h2>
+								<div class="blogs-banner-slide-content">
+									<span class="blogs-banner-slide-category"><?php echo $category_name; ?></span>
+									<p class="blogs-banner-slide-description"><?php echo esc_html(wp_trim_words(get_the_excerpt() ?: get_the_content(), 25, '...')); ?></p>
+								</div>
 							</div>
-						</div>
+						</a>
 					<?php endwhile; ?>
 				</div>
 			<?php endif;
