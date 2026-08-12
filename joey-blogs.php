@@ -26,6 +26,8 @@ define('JOEY_BLOGS_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('JOEY_BLOGS_PLUGIN_DIR', plugin_dir_path(__FILE__));
 
 require_once JOEY_BLOGS_PLUGIN_DIR . 'inc/class-joey-blogs.php';
+require_once JOEY_BLOGS_PLUGIN_DIR  . 'inc/class-sidebar-posts-widget.php';
+require_once JOEY_BLOGS_PLUGIN_DIR  . 'inc/class-j-toc.php';
 
 /**
  * Initialize the plugin.
@@ -43,3 +45,27 @@ function convert_custom_tags_to_buttons($content) {
     
     return preg_replace($pattern, $replacement, $content);
 }
+
+function my_custom_blog_sidebar() {
+    register_sidebar( array(
+        'name'          => __( 'Single Blog Sidebar', 'textdomain' ),
+        'id'            => 'single-blog-sidebar',
+        'description'   => __( 'Sidebar dành riêng cho trang Blog và bài viết chi tiết.', 'textdomain' ),
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h3 class="widget-title">',
+        'after_title'   => '</h3>',
+    ) );
+}
+add_action( 'widgets_init', 'my_custom_blog_sidebar' );
+
+
+function register_custom_sidebar_posts_widget() {
+    register_widget('Custom_Sidebar_Posts_Widget');
+}
+add_action('widgets_init', 'register_custom_sidebar_posts_widget');
+
+function enqueue_sidebar_posts_styles() {
+    wp_enqueue_style('sidebar-posts-style', get_template_directory_uri() . '/assets/css/sidebar-posts.css', array(), '1.0');
+}
+add_action('wp_enqueue_scripts', 'enqueue_sidebar_posts_styles');

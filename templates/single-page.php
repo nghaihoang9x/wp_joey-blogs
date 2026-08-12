@@ -43,55 +43,83 @@ $categories = wp_get_post_categories($post_id);
                 </div>
             </div>
             <div class="j-article__content">
-				<div class="j-article__thumbnail">
-					<img src="<?php echo esc_url($thumbnail); ?>" alt="<?php echo esc_attr($title); ?>" loading="lazy">
-				</div>
-                <?php 
+                <div class="j-article__thumbnail">
+                    <img src="<?php echo esc_url($thumbnail); ?>" alt="<?php echo esc_attr($title); ?>" loading="lazy">
+                </div>
+                <?php
                 the_content();
                 ?>
             </div>
         </div>
+        <?php
+        if (is_active_sidebar('single-blog-sidebar')) : ?>
+            <aside id="j-secondary" role="complementary">
+                <?php dynamic_sidebar('single-blog-sidebar'); ?>
+            </aside>
+        <?php endif; ?>
     </div>
 
-    <?php 
+    <?php
 
-	$recent_args = array(
-		'post_type'      => 'post',
-		'post_status'    => 'publish',
-		'posts_per_page' => 3,
-		'post__not_in'   => array($post_id), // Loại trừ bài hiện tại
-		'orderby'        => 'date',
-		'order'          => 'DESC',
-	);
+    $recent_args = array(
+        'post_type'      => 'post',
+        'post_status'    => 'publish',
+        'posts_per_page' => 3,
+        'post__not_in'   => array($post_id), // Loại trừ bài hiện tại
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+    );
 
-	// Nếu có category, thử tìm bài cùng category trước
-	if (!empty($categories)) {
-		$recent_args['category__in'] = $categories;
-	}
+    // Nếu có category, thử tìm bài cùng category trước
+    if (!empty($categories)) {
+        $recent_args['category__in'] = $categories;
+    }
 
-	$recent_query = new WP_Query($recent_args);
-	if ($recent_query->have_posts()) : 
-	?>
-    <section class="j-recent-blogs">
-        <div class="container">
-            <h2 class="j-recent-blogs__heading"><?php esc_html_e('Recent Blogs', 'nghaihoang9x'); ?></h2>
-            <div class="j-recent-blogs__grid">
-                <?php while ($recent_query->have_posts()) : $recent_query->the_post();
-                    $categories   = get_the_category();
-                    $category_name_card = !empty($categories) ? esc_html($categories[0]->name) : '';
-                    $permalink    = get_permalink();
-                    $title_card   = get_the_title();
-                    $thumbnail    = get_the_post_thumbnail_url(get_the_ID(), 'medium');
-                    $excerpt      = wp_trim_words(get_the_excerpt() ?: get_the_content(), 30, '...');
-                    $post_id_card = get_the_ID();
+    $recent_query = new WP_Query($recent_args);
+    if ($recent_query->have_posts()) :
+    ?>
+        <section class="j-recent-blogs">
+            <div class="container">
+                <h2 class="j-recent-blogs__heading"><?php esc_html_e('Recent Blogs', 'nghaihoang9x'); ?></h2>
+                <div class="j-recent-blogs__grid">
+                    <?php while ($recent_query->have_posts()) : $recent_query->the_post();
+                        $categories   = get_the_category();
+                        $category_name_card = !empty($categories) ? esc_html($categories[0]->name) : '';
+                        $permalink    = get_permalink();
+                        $title_card   = get_the_title();
+                        $thumbnail    = get_the_post_thumbnail_url(get_the_ID(), 'medium');
+                        $excerpt      = wp_trim_words(get_the_excerpt() ?: get_the_content(), 30, '...');
+                        $post_id_card = get_the_ID();
 
-                    include JOEY_BLOGS_PLUGIN_DIR . 'templates/content-blog-card.php';
-                endwhile; ?>
+                        include JOEY_BLOGS_PLUGIN_DIR . 'templates/content-blog-card.php';
+                    endwhile; ?>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
     <?php endif;
     wp_reset_postdata(); ?>
 </main>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Bật hiệu ứng cuộn mượt khi click anchor link
+        document.documentElement.style.scrollBehavior = 'smooth';
+
+        // Xử lý sự kiện Ẩn/Hiện Mục lục
+        var toggleBtn = document.getElementById('j-toc-toggle-btn');
+        var tocList = document.getElementById('j-toc-list-content');
+
+        if (toggleBtn && tocList) {
+            toggleBtn.addEventListener('click', function() {
+                if (tocList.style.display === 'none') {
+                    tocList.style.display = 'block';
+                    toggleBtn.textContent = '[Hiden]';
+                } else {
+                    tocList.style.display = 'none';
+                    toggleBtn.textContent = '[Show]';
+                }
+            });
+        }
+    });
+</script>
 <?php
 get_footer();
