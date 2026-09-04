@@ -99,27 +99,5 @@ $categories = wp_get_post_categories($post_id);
     <?php endif;
     wp_reset_postdata(); ?>
 </main>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Bật hiệu ứng cuộn mượt khi click anchor link
-        document.documentElement.style.scrollBehavior = 'smooth';
-
-        // Xử lý sự kiện Ẩn/Hiện Mục lục
-        var toggleBtn = document.getElementById('j-toc-toggle-btn');
-        var tocList = document.getElementById('j-toc-list-content');
-
-        if (toggleBtn && tocList) {
-            toggleBtn.addEventListener('click', function() {
-                if (tocList.style.display === 'none') {
-                    tocList.style.display = 'block';
-                    toggleBtn.textContent = '[Hiden]';
-                } else {
-                    tocList.style.display = 'none';
-                    toggleBtn.textContent = '[Show]';
-                }
-            });
-        }
-    });
-</script>
 <?php
 get_footer();
