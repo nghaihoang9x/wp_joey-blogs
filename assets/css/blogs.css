@@ -945,3 +945,176 @@
         width: 100%;
     }
 }
+
+/* Ẩn câu trả lời mặc định */
+.schema-faq .schema-faq-answer {
+    display: none;
+    overflow: hidden;
+    margin-top: 8px;
+}
+
+/* Câu hỏi có thể click */
+.schema-faq .schema-faq-question {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    padding-right: 30px;
+}
+
+/* Icon dấu + / - */
+.schema-faq .schema-faq-question::after {
+    content: "+";
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 20px;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+}
+
+/* Khi mở thì đổi icon thành dấu - */
+.schema-faq .schema-faq-section.active .schema-faq-question::after {
+    content: "−";
+}
+
+/* Hiện câu trả lời khi section có class active */
+.schema-faq .schema-faq-section.active .schema-faq-answer {
+    display: block;
+}
+
+/* Đường kẻ phân cách cho đẹp mắt (tuỳ chọn) */
+.schema-faq .schema-faq-section {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 14px 0;
+}
+
+/* Mặc định: ẩn card, chỉ hiện bảng (desktop) */
+.table-mobile-cards {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+
+    /* Ẩn bảng gốc, hiện card thay thế */
+    .wp-block-table table {
+        display: none;
+    }
+
+    .table-mobile-cards {
+        display: block;
+    }
+
+    .table-mobile-card {
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        margin-bottom: 16px;
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    .table-mobile-field {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 14px;
+        border-bottom: 1px solid #f0f0f0;
+        gap: 10px;
+    }
+
+    .table-mobile-field:last-child {
+        border-bottom: none;
+    }
+
+    .table-mobile-label {
+        font-weight: 600;
+        color: #555;
+        flex-shrink: 0;
+    }
+
+    .table-mobile-value {
+        text-align: right;
+    }
+
+    /* Field đầu tiên (Visa Type) làm nổi bật như tiêu đề card */
+    .table-mobile-field:first-child {
+        background: #f7f7f7;
+        font-weight: 700;
+    }
+    .table-mobile-field:first-child .table-mobile-label {
+        display: none; /* Ẩn label "Visa Type" vì nó đã là tiêu đề card */
+    }
+    .table-mobile-field:first-child .table-mobile-value {
+        text-align: left;
+        width: 100%;
+    }
+}
+
+/* ==== Style mặc định cho desktop ==== */
+.requirement-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.requirement-table th,
+.requirement-table td {
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+}
+
+/* ==== Responsive cho mobile (dưới 768px) ==== */
+@media screen and (max-width: 768px) {
+
+    .requirement-table thead {
+        display: none;
+    }
+
+    .requirement-table,
+    .requirement-table tbody,
+    .requirement-table tr,
+    .requirement-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .requirement-table tr {
+        margin-bottom: 16px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    .requirement-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: right !important;
+        padding: 10px 14px;
+        border: none;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .requirement-table td:last-child {
+        border-bottom: none;
+    }
+
+    .requirement-table td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        text-align: left;
+        color: #555;
+        margin-right: 10px;
+    }
+
+    .requirement-table td[data-label="Type"] {
+        background: #f7f7f7;
+        font-weight: 700;
+        font-size: 15px;
+    }
+
+    .requirement-table td[data-label="Apply Now"] a {
+        margin-left: auto;
+    }
+}

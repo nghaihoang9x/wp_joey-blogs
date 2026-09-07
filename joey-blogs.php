@@ -8,7 +8,7 @@
 Plugin Name: Joey blogs
 Plugin URI: http://nghaihoang9x.info
 Description: This is a plugin for Joey blogs
-Version: 0.1.0
+Version: 0.1.1
 Requires at least: 0.1.0
 Requires PHP: 7.4
 Author: nghaihoang9x.info
@@ -21,7 +21,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('JOEY_BLOGS_VERSION', '0.1.0.4');
+define('JOEY_BLOGS_VERSION', '0.1.1');
 define('JOEY_BLOGS_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('JOEY_BLOGS_PLUGIN_DIR', plugin_dir_path(__FILE__));
 

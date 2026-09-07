@@ -42,6 +42,7 @@ class Joey_Blogs
         add_filter('template_include', array($this, 'load_page_template'));
         add_action('wp_enqueue_scripts', array($this, 'enqueue_global_assets'));
         add_action('wp_enqueue_scripts', array($this, 'enqueue_blogs_page_assets'));
+        add_action('wp_enqueue_scripts', array($this, 'enqueue_single_assets'));
 
         // AJAX hooks (both admin and frontend).
         add_action('wp_ajax_blogs_filter', array($this, 'ajax_blogs_filter'));
@@ -188,6 +189,34 @@ class Joey_Blogs
             array(
                 'ajax_url' => admin_url('admin-ajax.php'),
                 'nonce'    => wp_create_nonce('blogs_filter_nonce'),
+            )
+        );
+    }
+
+    /**
+     * Enqueue custom JS on all single post pages.
+     */
+    public function enqueue_single_assets()
+    {
+        if (!is_single()) {
+            return;
+        }
+
+        wp_enqueue_script(
+            'joey-blogs-custom-blog',
+            JOEY_BLOGS_PLUGIN_URL . 'assets/js/custom-blog.js',
+            array('jquery'),
+            JOEY_BLOGS_VERSION,
+            true
+        );
+
+        wp_localize_script(
+            'joey-blogs-custom-blog',
+            'joeyBlogsSingle',
+            array(
+                'ajax_url' => admin_url('admin-ajax.php'),
+                'nonce'    => wp_create_nonce('joey_blogs_single_nonce'),
+                'post_id'  => get_the_ID(),
             )
         );
     }
