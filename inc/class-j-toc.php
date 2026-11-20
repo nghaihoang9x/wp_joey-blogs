@@ -23,6 +23,16 @@ class J_Table_Of_Contents
             return $content;
         }
 
+        // Không chèn TOC khi WP tự sinh excerpt (wp_trim_excerpt gọi the_content)
+        if (doing_filter('get_the_excerpt')) {
+            return $content;
+        }
+
+        // Chỉ chèn cho bài đang xem, không chèn cho các bài trong query phụ (Recent Blogs...)
+        if (get_the_ID() !== get_queried_object_id()) {
+            return $content;
+        }
+
         // Tìm tất cả các thẻ h2 và h3 trong bài viết
         $pattern = '/<h([2-3])(.*?)>(.*?)<\/h[2-3]>/i';
 
